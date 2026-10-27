@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geopolitical Tension Dashboard</title>
+<style>
+:root{
+  --bg:#1c1c1e; --surface:rgba(44,44,46,.78); --surface-solid:#2c2c2e; --border:rgba(255,255,255,.08); --hair:rgba(255,255,255,.07);
+  --text:#f5f5f7; --muted:#98989d; --accent:#0a84ff;
+  --red:#ff453a; --amber:#ff9f0a; --green:#30d158; --copper:#c8a07a;
+  --red-bg:rgba(255,69,58,.18); --amber-bg:rgba(255,159,10,.18); --green-bg:rgba(48,209,88,.18);
+  --toolbar:rgba(30,30,32,.72); --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  --net-bg:rgba(255,159,10,.08); --net-border:rgba(255,159,10,.3);
+  color-scheme:dark;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font:14px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.toolbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px max(20px,env(safe-area-inset-right,0px)) 12px max(20px,env(safe-area-inset-left,0px));background:var(--toolbar);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--hair)}
+.lights{display:flex;gap:8px;flex-shrink:0}
+.lights span{width:12px;height:12px;border-radius:50%;background:#ff5f57;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.12)}
+.lights span:nth-child(2){background:#febc2e}.lights span:nth-child(3){background:#28c840}
+.titles{min-width:0}
+h1{font:600 15px/1.2 -apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;letter-spacing:-.01em;color:var(--text)}
+.meta{color:var(--muted);font-size:12px;margin-top:2px}
+main{max-width:1280px;margin:0 auto;padding:20px max(20px,env(safe-area-inset-right,0px)) 32px max(20px,env(safe-area-inset-left,0px))}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr));gap:16px;align-items:start}
+.card{background:var(--surface);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);min-width:0}
+.card-title{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:10px;letter-spacing:.01em}
+.gauge{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.gauge-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.red{color:var(--red)}.amber{color:var(--amber)}.green{color:var(--green)}.copper{color:var(--copper)}
+.bg-red{background:var(--red);box-shadow:0 0 0 4px var(--red-bg)}.bg-amber{background:var(--amber);box-shadow:0 0 0 4px var(--amber-bg)}.bg-green{background:var(--green);box-shadow:0 0 0 4px var(--green-bg)}
+.big-val{font:700 22px/1.2 -apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;letter-spacing:-.02em}
+.metric,.pos-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--hair)}
+.metric:last-child,.pos-row:last-child{border-bottom:none}
+.metric-label{color:var(--muted);font-size:13px}
+.metric-val{font-size:15px;font-weight:600}
+.metric-chg{font-size:12px;margin-left:6px}
+.news-item{padding:9px 0;border-bottom:1px solid var(--hair);font-size:13px;color:var(--text)}
+.news-item:last-child{border-bottom:none}
+.news-item .badge{display:inline-block;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:8px;letter-spacing:.02em;vertical-align:1px}
+.badge-red{background:var(--red-bg);color:var(--red)}.badge-amber{background:var(--amber-bg);color:var(--amber)}.badge-green{background:var(--green-bg);color:var(--green)}
+.copper-box{border-color:color-mix(in srgb,var(--copper) 30%,var(--border))}
+.weekend-box{grid-column:1/-1;background:var(--net-bg);border:1px solid var(--net-border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
+.weekend-box .title{color:var(--amber);font-size:13px;font-weight:700;margin-bottom:10px}
+.weekend-risk{padding:6px 0;font-size:13.5px;line-height:1.55}
+</style>
+</head>
+<body>
+
+<header class="toolbar"><div class="lights" aria-hidden="true"><span></span><span></span><span></span></div><div class="titles"><h1>Geopolitical Tension Dashboard</h1>
+<div class="meta">Mon Oct 26, 2026 · 9:03 PM EDT · Market-close refresh (Mon Oct 26 settles) · 🔴 ESCALATING — record Hormuz ship attacks, Brent at 6-month highs; Tehran mediation is the swing factor</div></div></header>
+<main>
+
+<div class="grid">
+
+<!-- GAUGE -->
+<div class="card">
+  <div class="card-title">🌡 Tension Gauge</div>
+  <div class="gauge">
+    <div class="gauge-dot bg-red"></div>
+    <span class="big-val red">🔴 ESCALATING — Hormuz attacks at a record, diplomacy racing the midterms</span>
+  </div>
+  <div style="color:var(--muted);font-size:11px;margin-top:6px;">
+    Escalation intact into the Nov 3 US midterms. Reuters: ship attacks around Hormuz hit a record high in October (≈3.5% of the world supertanker fleet attacked per Marisks (private); GFS Pride sunk by Oct 14; IRGC claims mine hits on tankers Oct 20). Today the Houthis said they fired missiles at Riyadh's airport and drones at East-West pipeline pumping stations (Saudi unconfirmed); Egypt approved military support for Riyadh. US and Iran are both threatening new attacks, a US blockade of Iranian ports is on the agenda, and CNN/FT flag possible US strikes after the midterms. Offsets: Saudi, Pakistani and Turkish delegations met President Pezeshkian in Tehran today to revive US–Iran talks (Qatar visited Sunday), CENTCOM says &gt;95% of ships transit safely, and Kpler (private) shows Gulf exports above pre-war. Result: WTI Dec <span class="red">$101.76</span> (−1.5% Mon, still +2.8% vs the Oct 16 Dec settle of $99.02), Brent Dec <span class="red">$115.81</span> after tagging $117 intraday (Fri $116.72 = highest settle since Apr 29). Only the oil leg is confirming — defense is bouncing but ~70% off highs and rare earths sit at/near 52-week lows (see Net Read).
+  </div>
+</div>
+
+<!-- OIL PRICES -->
+<div class="card">
+  <div class="card-title">🛢 Energy Prices (Mon Oct 26 settle · evening proxy 9:03 PM EDT)</div>
+  <div class="metric">
+    <span class="metric-label">WTI Crude (Dec · CLZ26 front month)</span>
+    <span><span class="metric-val red">$101.76</span><span class="metric-chg red">−1.46% (−$1.51) settle · eve proxy $101.27 (−0.48%)</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">WTI Jan (CLF27 · next month)</span>
+    <span><span class="metric-val red">$98.79</span><span class="metric-chg red">−0.70% eve · settle $99.49 · 52w hi $101.48</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Brent Crude (Dec)</span>
+    <span><span class="metric-val red">$115.81</span><span class="metric-chg red">−0.78% (−$0.91) settle · eve proxy $115.09 (−0.62%) · intraday &gt;$117</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Brent–WTI spread (Dec/Dec, settles)</span>
+    <span><span class="metric-val amber">+$14.05</span><span class="metric-chg" style="color:var(--muted)">premium sits in seaborne / Gulf crude</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Week to Fri Oct 23 · October MTD</span>
+    <span><span class="metric-val green">Brent +6% · WTI +2.3%</span><span class="metric-chg green">oil ≈ +12% in Oct (CNBC)</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Murban (Gulf grade)</span>
+    <span><span class="metric-val red">$117.67</span><span class="metric-chg red">−0.28%</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">WTI Dec/Jan spread</span>
+    <span><span class="metric-val amber">≈ +$2.27 backwardation</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">EIA crude stocks (wk to Oct 16)</span>
+    <span><span class="metric-val green">−3.1M bbl → 412.5M</span><span class="metric-chg" style="color:var(--muted)">3% below 5-yr avg · distillate +1.7M · next EIA Wed Oct 28</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">US diesel (AAA)</span>
+    <span><span class="metric-val red">$6.35/gal</span><span class="metric-chg red">+73% y/y · record $6.53 (9/22) · regular $4.29</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Supply offsets (bearish)</span>
+    <span><span class="metric-val amber">Gulf exports &gt;24M bpd (above pre-war) · IEA "ready to act again" · &gt;$120 risks demand destruction</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Supply cushion (bullish)</span>
+    <span><span class="metric-val amber">US SPR lowest since 1982 · Ukraine refinery strikes resumed</span></span>
+  </div>
+  <div style="margin-top:6px;font-size:10px;color:var(--muted)">WTI/Brent live = oilprice.com spot proxy (10-min delay at ~9:03 PM EDT; its % change is vs Monday's settle, i.e. the evening Globex move). Settles per CNBC/Reuters. Not an exact futures print. Jan WTI via Yahoo (CLF27). Nov WTI (CLX26) expired Oct 20. Diesel/gasoline via AAA; EIA via OGJ/Reuters.</div>
+</div>
+
+<!-- COPPER FUTURES -->
+<div class="card copper-box">
+  <div class="card-title">🔶 Copper Futures (HG Dec) — Mon Oct 26 (evening session)</div>
+  <div class="gauge">
+    <div class="gauge-dot" style="background:var(--copper);box-shadow:0 0 8px var(--copper);"></div>
+    <span class="copper" style="font-weight:bold;">STRUCTURAL BULL · Holding $6.55 support</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">COMEX copper (HGZ26)</span>
+    <span><span class="metric-val copper">$6.564/lb</span><span class="metric-chg green">+0.34% (+$0.022) vs Mon settle $6.542</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Evening-session range</span>
+    <span><span class="metric-val" style="color:var(--muted)">$6.541 – $6.5765</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">≈ per tonne</span>
+    <span><span class="metric-val copper">~$14,470/t</span><span class="metric-chg amber">−5.7% vs Sep record $6.96</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">LME cash</span>
+    <span><span class="metric-val green">Record $14,822/t</span><span class="metric-chg" style="color:var(--muted)">Oct 12 · stale — not re-pulled</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Support / resistance</span>
+    <span><span class="metric-val amber">$6.55 → $6.31 · $6.96 → $7.00</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Supply risk</span>
+    <span><span class="metric-val red">BHP (BHP) Q1 output −19% y/y · Escondida disruptions</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Street / flows</span>
+    <span><span class="metric-val amber">Goldman Sachs (GS) raised forecasts · US stockpiling · China buying cautious at highs</span></span>
+  </div>
+  <div style="margin-top:6px;font-size:10px;color:var(--muted)">HG via Yahoo/TradingView (HGZ26 = HG1!); evening-session % is vs Mon settle (Yahoo prev close). Still decoupled from oil — copper +0.34% while crude fell ~1.5% on the day. BHP (BHP) realized $7.01/lb in the quarter (+53% y/y); Bloomberg: Chile's "mining recession" deepening. Grid + AI + defense demand vs slow mine pipeline = the minerals thesis in metal form.</div>
+</div>
+
+<!-- HORMUZ STATUS -->
+<div class="card">
+  <div class="card-title">🚢 Strait of Hormuz</div>
+  <div class="gauge">
+    <div class="gauge-dot bg-red"></div>
+    <span class="red" style="font-weight:bold;">UNDER ATTACK · Record October, yet Gulf exports above pre-war</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Latest (Mon Oct 26)</span>
+    <span class="metric-val amber">Saudi / Pakistan / Turkey delegations in Tehran for talks</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Attacks</span>
+    <span class="metric-val red">Record high in Oct · ≈3.5% of world supertanker fleet attacked</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Sinkings / mines</span>
+    <span class="metric-val red">GFS Pride sunk by Oct 14 · IRGC claims tanker mine hits Oct 20</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Houthi front</span>
+    <span class="metric-val red">Claim hits on Riyadh airport + East-West pumping stations (Saudi unconfirmed)</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Gulf oil exports (Kpler, Hormuz + bypass)</span>
+    <span class="metric-val green">&gt;24M bpd — above pre-war (Oct 21)</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Hormuz-only crude exports / transits</span>
+    <span class="metric-val" style="color:var(--muted)">stale — last read (wk to Oct 14): 9.4M bpd ≈ 70% prewar · 131 transits</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">US Navy / CENTCOM</span>
+    <span class="metric-val amber">&gt;95% of transits safe · 3,000+ ships assisted in 6 months · IRGC mines cleared</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Diplomatic track</span>
+    <span class="metric-val amber">Iran "willing" to resume talks under June interim deal; analysts: no breakthrough without something new</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">US posture</span>
+    <span class="metric-val amber">US blockade of Iranian ports on agenda · strikes feared after Nov 3 midterms</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">De-escalation tail-risk</span>
+    <span class="metric-val" style="color:var(--muted)">Any interim deal / reopening = fast unwind (Sep: ~$107 → &lt;$94) · ~$20/bbl risk premium (Gallo Partners (private))</span>
+  </div>
+</div>
+
+<!-- KEY HEADLINES -->
+<div class="card">
+  <div class="card-title">📰 Key Headlines (Oct 20–26)</div>
+  <div class="news-item"><span class="badge badge-amber">WATCH</span>Oil ticks lower as Saudi defense minister meets Iran's president in Tehran to de-escalate — Brent settles $115.81 after briefly topping $117; WTI $101.76 (CNBC, Oct 26)</div>
+  <div class="news-item"><span class="badge badge-red">CRITICAL</span>Ship attacks in Strait of Hormuz hit record high in October — ≈3.5% of world supertanker fleet attacked (Reuters, Oct 23; USNI, Oct 22)</div>
+  <div class="news-item"><span class="badge badge-red">CRITICAL</span>Houthis say they hit Saudi East-West oil pumping stations and fired at Riyadh's airport — Saudi unconfirmed; Egypt approves military support for Riyadh (Reuters / CNBC, Oct 26)</div>
+  <div class="news-item"><span class="badge badge-red">CRITICAL</span>Fears grow of a return to war: speculation Trump could order new strikes on Iran after next week's midterms; US and Iran threaten new attacks (CNN / FT / Reuters, Oct 26)</div>
+  <div class="news-item"><span class="badge badge-amber">OFFSET</span>More oil leaving the Gulf than before the war — &gt;24M bpd incl. bypass routes (Kpler via Al-Monitor / NY Post, Oct 21; WSJ, Oct 26); CENTCOM: &gt;95% of ships transit safely (Anadolu, Oct 25)</div>
+  <div class="news-item"><span class="badge badge-amber">WATCH</span>Ukraine resumed refinery strikes after a short-lived energy-ceasefire pause; ≥114 attacks on Russian refineries this year, Russia's diesel exports crippled (Bloomberg, Oct 22; CNBC, Oct 21)</div>
+  <div class="news-item"><span class="badge badge-amber">WATCH</span>Kratos (KTOS) PT cut to $61 from $75 at Piper Sandler (PIPR); Oppenheimer (OPY) initiates KTOS Outperform ($50) and AeroVironment (AVAV) Outperform ($205); AVAV PT cut to $170 on election/budget uncertainty (TheFly, Oct 19–23)</div>
+  <div class="news-item"><span class="badge badge-green">SIGNAL</span>Palantir (PLTR) PT raised to $225 from $200 at Deutsche Bank (DB) and to $231 at Piper Sandler (PIPR); Q3 earnings Nov 2 (TheFly, Oct 23–26)</div>
+  <div class="news-item"><span class="badge badge-amber">WATCH</span>China's rare-earth control suspension expires Nov 10 — no published MOFCOM extension as of Oct 16 (sources conflict; broader tariff truce runs to Jan 10, 2027); TSMC (TSM) probing rare-earth-free tool alternatives (technology.org Oct 19; Reuters Oct 22)</div>
+  <div class="news-item"><span class="badge badge-green">SIGNAL</span>BHP (BHP) Q1 copper output −19% y/y on Escondida disruptions; realized price $7.01/lb, +53% y/y (Finimize / Mining Technology, Oct 20–23)</div>
+  <div class="news-item"><span class="badge badge-green">SIGNAL</span>Anduril (private) valued ~$90B via employee tender offers, no IPO date set; Luckey co-launches $200M Warhound with Colossal (private) (GovConWire / Fortune, Oct 20–22)</div>
+</div>
+
+<!-- EQUITIES -->
+<div class="card">
+  <div class="card-title">📈 Key Equities (Mon Oct 26 close)</div>
+  <div style="color:var(--muted);font-size:10px;letter-spacing:1px;margin:2px 0;">ENERGY — CONFIRMING</div>
+  <div class="metric">
+    <span class="metric-label">XOM (ExxonMobil)</span>
+    <span><span class="metric-val green">$184.54</span><span class="metric-chg green">+0.73% · at 52-wk high · PT $179.41 (below price) · Q3 Oct 30</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">CVX (Chevron)</span>
+    <span><span class="metric-val red">$232.01</span><span class="metric-chg red">−0.51% · new 52-wk high $234.08 intraday · PT $232.50 · Q3 Oct 30</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">USO (oil ETF · confirmation only)</span>
+    <span><span class="metric-val red">$166.23</span><span class="metric-chg red">−1.95% · 52w hi $169.96</span></span>
+  </div>
+  <div style="color:var(--muted);font-size:10px;letter-spacing:1px;margin:8px 0 2px;">DEFENSE — NOT CONFIRMING (BOUNCING ON A DOWN-OIL DAY)</div>
+  <div class="metric">
+    <span class="metric-label">PLTR (Palantir)</span>
+    <span><span class="metric-val green">$198.84</span><span class="metric-chg green">+1.06% · −6.6% off 52w hi $212.94 · PT $207.62 · ER Nov 2</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">KTOS (Kratos)</span>
+    <span><span class="metric-val green">$40.43</span><span class="metric-chg green">+4.52% · −70% off 52w hi $134 · PT $94.44 · ER Nov 5</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">RKLB (Rocket Lab)</span>
+    <span><span class="metric-val green">$53.82</span><span class="metric-chg green">+2.32% · −64% off 52w hi $151 · PT $102.15 · ER Nov 9</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">AVAV (AeroVironment)</span>
+    <span><span class="metric-val green">$125.45</span><span class="metric-chg green">+1.78% · −69% off 52w hi $408.25 · PT $213.07 · Oppenheimer Outperform init</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Anduril (private)</span>
+    <span><span class="metric-val green">~$90B tender</span><span class="metric-chg green">employee tender offers · no IPO date announced</span></span>
+  </div>
+  <div style="color:var(--muted);font-size:10px;letter-spacing:1px;margin:8px 0 2px;">CRITICAL MINERALS — AT 52-WK LOWS</div>
+  <div class="metric">
+    <span class="metric-label">MP (MP Materials)</span>
+    <span><span class="metric-val red">$37.47</span><span class="metric-chg red">−2.17% · 1% above 52w lo $37.11 · PT $70.94 · ER Nov 5</span></span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">USAR (USA Rare Earth)</span>
+    <span><span class="metric-val red">$8.91</span><span class="metric-chg red">−4.50% · printed fresh 52w lo $8.89 · PT $35.13 · ER ~Nov 9 (est.)</span></span>
+  </div>
+</div>
+
+<!-- NET READ BOX -->
+<div class="weekend-box">
+  <div class="title">⚠️ Net Read — Tuesday Oct 27 Action Map</div>
+  <div class="weekend-risk red">🔴 <strong>Oil leg — CONFIRMING, but headline-fragile.</strong> WTI Dec $101.76 / Brent Dec $115.81 (Brent–WTI +$14), oil ≈ +12% in October, XOM at a 52-wk high ($184.54; street PT $179.41 now sits below price), CVX tagged a new high intraday before easing. Monday's −1.5% on a single Tehran-mediation headline shows how fast it can fade. Levels: StoneX (SNEX) has WTI testing September highs near $105 and a resistance zone dating to 2011, with Brent facing its 2026 highs above $110 (2026 high closes: Brent $118.35 on Mar 31, WTI $112.95 on Apr 7, per Rigzone); Gallo Partners (private) puts the risk premium near $20/bbl and warns &gt;$120 destroys demand. Cushion is thin (US SPR lowest since 1982) but offsets exist: Gulf exports above pre-war, IEA "ready to act again". Precedent: the Sep ceasefire track took WTI ~$107 → &lt;$94 within days.</div>
+  <div class="weekend-risk amber" style="margin-top:6px;">🟠 <strong>Defense leg — NOT confirming (bouncing).</strong> KTOS +4.5%, RKLB +2.3%, AVAV +1.8%, PLTR +1.1% — all up on a day crude fell, so no Gulf-war beta. KTOS/AVAV remain ~70% below 52-wk highs and analysts are cutting targets on election/budget uncertainty (AVAV PT $170 from $230; KTOS PT $61 from $75) while PLTR gets raised ($225 at Deutsche Bank (DB)). The tension bid shows up in private marks instead: Anduril (private) ~$90B tender. Catalysts: PLTR Nov 2, midterms Nov 3, KTOS Nov 5, RKLB Nov 9.</div>
+  <div class="weekend-risk copper" style="margin-top:6px;">🔶 <strong>Minerals leg — diverging, now at the lows.</strong> USAR $8.91 printed a fresh 52-wk low ($8.89) and MP $37.47 sits 1% above its low even with oil at 6-month highs; targets are being trimmed (MP: Goldman Sachs (GS) $57 from $65, Morgan Stanley (MS) $66 from $73) though consensus still sits far above ($70.94 / $35.13). Binary: China's rare-earth control suspension — Nov 10 expiry, no published MOFCOM extension as of Oct 16 (one think-tank reads it as rolled to Jan 10, 2027, so verify); re-imposition = squeeze higher for MP/USAR, extension = more drift. MP reports Nov 5. Copper $6.56 is holding $6.55 support (break → $6.31); record $6.96 overhead.</div>
+  <div style="margin-top:8px;font-size:11px;color:var(--muted)">Most important variable: does the Saudi–Pakistan–Turkey mediation in Tehran turn into a US–Iran interim deal before the Nov 3 midterms — or does Washington strike after them? A deal unwinds oil with no cushion from the weak defense/minerals legs; a Houthi hit on Saudi's East-West pipeline is the upside tail.</div>
+</div>
+
+</div>
+
+<div style="margin-top:12px;color:var(--muted);font-size:10px;">
+  ⚠️ Not financial advice · Sources: oilprice.com (WTI/Brent/Murban spot proxy), Yahoo + TradingView (CLZ26, CLF27, HGZ26), stockanalysis.com (equities, analyst targets, news), AAA, CNBC, Reuters, AP, CNN, FT, Bloomberg, WSJ, USNI, Al Jazeera, CENTCOM / Anadolu, Kpler / Al-Monitor, GovConWire, TheFly, technology.org, OGJ, Finimize, Mining Technology, mining.com.au · Refreshed Mon Oct 26, 2026 9:03 PM EDT (data = Mon Oct 26 close; oil/copper evening proxy)
+</div>
+
+</main>
+</body>
+</html>
